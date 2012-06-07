@@ -1,0 +1,8 @@
+﻿@model LuceneNeatThings.ViewModels.SearchQuery
+
+@using (Html.BeginForm("Search", "Home", FormMethod.Get, new { Class = "searchform" }))
+{
+    <p><input type="text" class="textbox" id="query" name="query" value="@Model.Query" /><input class="button" type="submit" value="Search" /></p>
+	<p>&nbsp;</p>
+	<p><input type="checkbox" id="titlesonly" name="titlesonly" @if (Model.TitlesOnly){ <text>checked="checked"</text> }/> Titles only</p>
+}

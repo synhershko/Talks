@@ -1,0 +1,47 @@
+﻿@using LuceneNeatThings.Core
+@using LuceneNeatThings.ViewModels
+@model SearchResultsViewModel
+
+@{
+    ViewBag.Title = ":: Search results";
+    var q = Model.Query;
+}
+
+<h2>Search results</h2>
+<p>@Model.TotalResults results found</p>
+
+@if (!string.IsNullOrWhiteSpace(@ViewBag.ErrorMessage))
+{
+<p class="error">@ViewBag.ErrorMessage</p>
+}
+
+<p style="text-align:center">
+	@Html.Pager(q.CurrentPage, Index.PageSize, Model.TotalResults, q.GetSearchUrl())
+</p>
+
+
+@if (Model.Suggestions != null)
+{
+	<div>
+    Did you mean?
+		<ul>
+		@foreach (var term in Model.Suggestions)
+		{
+			<li>@term</li>
+		}
+        </ul>
+	</div>
+}
+
+<div class="searchResults">
+@foreach (var result in Model.SearchResults)
+{
+    <h3><a href="ViewDocument?indexDocId=@result.LuceneDocId&height=450&width=800" class="thickbox">@result.Title</a></h3>
+    <p>@result.Fragment</p>
+    <p class="searchResultInfo">Score: @String.Format("{0:0.00}", result.Score) - <a href="MoreLikeThis?indexDocId=@result.LuceneDocId&height=450&width=600" class="thickbox">Related content</a></p>
+}
+</div>
+
+<p style="text-align:center">
+@Html.Pager(q.CurrentPage, Index.PageSize, Model.TotalResults, q.GetSearchUrl())
+</p>

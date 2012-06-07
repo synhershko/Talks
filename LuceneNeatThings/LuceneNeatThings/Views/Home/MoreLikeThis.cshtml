@@ -1,0 +1,16 @@
+﻿@model IEnumerable<LuceneNeatThings.ViewModels.Document>
+
+@{
+    Layout = null;
+}
+
+<div class="documentViewer">
+@if (Model != null)
+{
+foreach (var doc in Model)
+ {
+    var wikiLink = Url.Encode(doc.Title.ToString().Replace(' ', '_'));
+     <p><a href="http://en.wikipedia.org/wiki/@wikiLink" target="_blank">@doc.Title</a></p>
+ }
+}
+</div>

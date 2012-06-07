@@ -1,0 +1,87 @@
+﻿@using LuceneNeatThings.ViewModels
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Lucene demo @ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/thickbox.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/images/Envision.css")" rel="stylesheet" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="@Url.Content("~/Content/thickbox-compressed.js")"></script>
+    @RenderSection("Header", false)
+</head>
+
+<body>
+<div id="wrap">
+		
+		<!--header -->
+		<div id="header">			
+				
+			<h1 id="logo-text"><a href="#">Foo</a></h1>		
+			<p id="slogan">bar</p>		
+			
+			<div id="header-links">
+			<p>@Html.Partial("_LogOnPartial")</p>
+		</div>		
+						
+		</div>
+
+        <!-- menu -->	
+		<div id="menu">
+			<ul>
+				<li id="current">@Html.ActionLink("Home", "Index", "Home")</li>
+                <li><a href="/Home/Autocomplete">Auto-complete demo</a></li>
+				<li class="last"></li>
+			</ul>
+		</div>					
+        
+        <!-- content-wrap starts here -->
+		<div id="content-wrap">
+			<div id="sidebar">
+                @Html.Partial("_SearchFormPartial", ViewBag.Query != null ? (SearchQuery)ViewBag.Query : new SearchQuery())
+					
+				<h3>Links</h3>
+				<ul class="sidemenu">
+                    <li><a href="http://lucene.apache.org">Lucene</a></li>
+					<li><a href="http://incubator.apache.org/lucene.net/">Lucene.Net</a></li>
+				</ul>
+				
+				<h3>Wise Words</h3>
+				<div class="left-box">
+					<p>&quot;Evaluation of the past is the first step toward 
+					vision for the future.&quot; </p>
+					
+					<p class="align-right">- Chris Widener</p>
+				</div>									
+			</div>
+				
+			<div id="main">
+                @RenderBody()
+			</div>
+		
+		<!-- content-wrap ends here -->	
+		</div>
+					
+		<!--footer starts here-->
+		<div id="footer">
+			
+            <p>
+		    &copy; 2012 <strong>Itamar Syn-Hershko</strong>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+		    <a href="http://www.bluewebtemplates.com/" title="Website Templates">website templates</a> by <a href="http://www.styleshout.com/">styleshout</a>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <a href="http://validator.w3.org/check?uri=referer">XHTML</a> |
+		    <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>
+   	    </p>
+				
+		</div>	
+
+<!-- wrap ends here -->
+</div>
+
+</body>
+</html>
