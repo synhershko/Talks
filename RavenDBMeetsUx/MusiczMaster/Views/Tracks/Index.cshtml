@@ -1,0 +1,24 @@
+﻿@model MusiczMaster.Core.TracksSearchViewModel
+
+@{
+    ViewBag.Title = "Tracks";
+}
+
+          <div class="span9">
+          <div class="hero-unit">
+            <h1>Tracks Listing</h1>
+              <p>@Model.Message. Total of <b>@Model.ResultsCount.ToString("N0")</b> results, showing @Model.PageSize results per page (page @Model.PageNumber of @((Model.ResultsCount / Model.PageSize).ToString("N0"))). </p>
+
+          </div>              
+              @foreach(var t in Model.Tracks)
+              {
+                  <div class="row-fluid">
+                      <div class="span12">
+                          <h2>@t.Title / @t.Artist</h2>
+                          <p>Year: @t.Year</p>
+                          <p>Genre: @t.Genre</p>
+                          <p><a class="btn" href="#">Add to playlist &raquo;</a></p>
+                      </div>
+                  </div>
+              }
+        </div><!--/span-->
