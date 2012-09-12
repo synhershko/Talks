@@ -1,0 +1,31 @@
+﻿@using MusiczMaster.Core
+@model MusiczMaster.Core.TrackSuggestionsViewModel
+
+@{
+    ViewBag.Title = "Add to Playlist";
+}
+
+<div class="span9">
+    <div class="hero-unit">
+        <h1>Add to playlist</h1>
+        <p>@Model.Track.YouTubeLink()</p>
+        <p><a class="btn btn-primary btn-large">Add now &raquo;</a></p>
+    </div>
+
+@if (Model.SuggestedTracks != null && Model.SuggestedTracks.Any())
+{
+    <h2>You may also like:</h2>
+    foreach (var t in Model.SuggestedTracks)
+    {
+        <div class="row-fluid">
+            <div class="span12">
+                <h2>@t.Title / @t.Artist</h2>
+                <p>Year: @t.Year</p>
+                <p>Genre: @t.Genre</p>
+                <p><a class="btn" href="#">Add to playlist &raquo;</a></p>
+            </div>
+        </div>
+    }
+}
+</div>
+

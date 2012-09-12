@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Globalization
+@using MusiczMaster.Core
+<!DOCTYPE html>
 <html>
 <head>
     <title>MusiczMaster :: @ViewBag.Title</title>
@@ -6,23 +8,26 @@
     <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-   <!-- Le styles -->
     <link href="../assets/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
     </style>
+
+    
     <link href="@Url.Content("~/Content/bootstrap-responsive.css")" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+    @RenderSection("Header", false)
 </head>
 
     <body>
@@ -52,31 +57,37 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span3">
-          <div class="well sidebar-nav">
+          <div class="span3">
+              
+@{
+    var m = Model as TracksSearchViewModel;
+    if (m != null && m.Facets != null && m.Facets.Results != null)
+    {
+        var ti = new CultureInfo("en-US", false).TextInfo;
+        <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li class="active"><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li class="nav-header">Sidebar</li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li class="nav-header">Sidebar</li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
+                @foreach (var facet in m.Facets.Results)
+                {
+                    <li class="nav-header">@facet.Key.Replace("_Range", string.Empty)</li>
+                    var count = 0;
+                    foreach (var facetValue in facet.Value.Values)
+                    {
+                        <li><a href="#">@ti.ToTitleCase(facetValue.Range) (@facetValue.Hits)</a></li>
+                        if (++count > 20)
+                        {
+                            <li>@(facet.Value.Values.Count - count) more...</li>
+                            break;
+                        }
+                    }
+                }
             </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
+        </div>
+    }
+}
+    </div>
 
          @RenderBody()
-      </div><!--/row-->
+      </div>
 
       <hr>
 

@@ -53,11 +53,12 @@
       <Private>True</Private>
       <HintPath>..\packages\Nuget.Core.1.0.1120.104\lib\net40\NuGet.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Abstractions">
-      <HintPath>..\packages\RavenDB.Client.1.2.2083-Unstable\lib\net40\Raven.Abstractions.dll</HintPath>
+    <Reference Include="Raven.Abstractions, Version=1.2.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RavenDB.Client.1.2.2084-Unstable\lib\net40\Raven.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Client.Lightweight">
-      <HintPath>..\packages\RavenDB.Client.1.2.2083-Unstable\lib\net40\Raven.Client.Lightweight.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Client.1.2.2084-Unstable\lib\net40\Raven.Client.Lightweight.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
@@ -121,10 +122,13 @@
       <Link>Models\Track.cs</Link>
     </Compile>
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PlaylistsController.cs" />
     <Compile Include="Controllers\RavenController.cs" />
     <Compile Include="Controllers\TracksController.cs" />
+    <Compile Include="Core\TrackSuggestionsViewModel.cs" />
     <Compile Include="Core\TracksIndex.cs" />
     <Compile Include="Core\TracksSearchViewModel.cs" />
+    <Compile Include="Core\YouTubeResolver.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -226,6 +230,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Playlists\AddToPlaylist.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Tracks\Interactive.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
