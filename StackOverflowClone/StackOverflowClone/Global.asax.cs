@@ -13,12 +13,6 @@ namespace StackOverflowClone
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        private static IDocumentStore theDocStore;
-        public static IDocumentStore DocumentStore
-        {
-            get { return theDocStore; }
-        }
-
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -27,13 +21,6 @@ namespace StackOverflowClone
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            theDocStore = new DocumentStore
-            {
-                ConnectionStringName = "RavenDB"
-            }.Initialize();
-
-            IndexCreation.CreateIndexes(typeof(MvcApplication).Assembly, theDocStore);
         }
     }
 }
