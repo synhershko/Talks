@@ -1,6 +1,7 @@
 ﻿using System.Dynamic;
 using System.Linq;
 using System.Web.Mvc;
+using Raven.Client;
 using Raven.Client.Linq;
 using StackOverflowClone.Core;
 using StackOverflowClone.Models;
@@ -29,7 +30,7 @@ namespace StackOverflowClone.Controllers
             dynamic viewModel = new ExpandoObject();
             viewModel.Header = header;
             viewModel.User = new UserViewModel(User) { Id = User.Identity.Name, Name = User.Identity.Name };
-            viewModel.Questions = questionsQuery.ToList();
+            viewModel.Questions = questionsQuery.AsProjection<QuestionLightViewModel>().ToList();
 
             return View(viewModel);
         }

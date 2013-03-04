@@ -144,6 +144,7 @@
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\RavenController.cs" />
     <Compile Include="Core\AnswerInputModel.cs" />
+    <Compile Include="Core\Indexes\QuestionsIndex.cs" />
     <Compile Include="Core\QuestionInputModel.cs" />
     <Compile Include="Core\QuestionLightViewModel.cs" />
     <Compile Include="Core\UserViewModel.cs" />

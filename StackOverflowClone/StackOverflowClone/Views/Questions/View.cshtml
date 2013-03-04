@@ -2,6 +2,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     var q = (StackOverflowClone.Models.Question)Model.Question;
+    var totalVotes = q.Stats.UpVoteCount - q.Stats.DownVoteCount;
 }
 
 <div id="content">
@@ -19,7 +20,7 @@
                                 <a class="vote-up-off" title="This question shows research effort; it is useful and clear (click again to undo)">
                                     up vote</a>
                                 <span class="vote-count-post " title="View upvote and downvote totals" style="cursor: pointer;">
-                                    ?</span>
+                                    @totalVotes</span>
                                 <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful (click again to undo)">
                                     down vote</a>
 
@@ -387,7 +388,7 @@
 
                         <td style="padding-left: 10px">
                             <p class="label-key">
-                                <b>?? times</b>
+                                <b>@q.Stats.ViewsCount times</b>
                             </p>
                         </td>
                     </tr>

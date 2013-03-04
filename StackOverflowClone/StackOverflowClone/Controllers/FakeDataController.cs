@@ -24,6 +24,7 @@ namespace StackOverflowClone.Controllers
             foreach (var question in questions)
             {
                 RavenSession.Store(question);
+                RavenSession.Store(question.Stats, question.Id + "/stats");
             }
 
             return Json(new { Done = "yes" });

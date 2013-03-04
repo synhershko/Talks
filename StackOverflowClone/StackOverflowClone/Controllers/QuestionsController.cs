@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Dynamic;
 using System.Web.Mvc;
 using StackOverflowClone.Core;
@@ -16,6 +17,9 @@ namespace StackOverflowClone.Controllers
             {
                 return new HttpNotFoundResult();
             }
+            
+            question.Stats = RavenSession.Load<Stats>(question.Id + "/stats");
+            question.Stats.ViewsCount++;
 
             dynamic viewModel = new ExpandoObject();
             viewModel.User = new UserViewModel(User) { Id = User.Identity.Name, Name = User.Identity.Name };
@@ -45,6 +49,7 @@ namespace StackOverflowClone.Controllers
                     question.CreatedBy = "users/1"; // Just a stupid default because we haven't implemented log-in
 
                     RavenSession.Store(question);
+                    RavenSession.Store(new Stats(), question.Id + "/stats");
 
                     return RedirectToAction("Index", "Home", new { area = "" });
                 }
