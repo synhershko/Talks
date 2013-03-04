@@ -23,7 +23,13 @@
                 @Html.Partial("_Authentication", (UserViewModel) Model.User)
             </div>
             <div id="hsearch">
-                @Html.Partial("_TagSearch")
+                
+                    <form id="search" action="@Url.Action("Search", "Questions")" method="get">
+                        <div>
+                            <input name="q" class="textbox" placeholder="search" tabindex="1" type="text" value="">
+                        </div>
+                    </form>
+                
             </div>
 
             <br class="cbt">

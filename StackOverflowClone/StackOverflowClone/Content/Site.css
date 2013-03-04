@@ -12,7 +12,7 @@
 
 #header { position: relative; }
 #hsearch { position: absolute; top: 0; right: 0; }
-#hlinks { float: right; padding-right: 150px;padding-top: 8px; }
+#hlinks { float: right; padding-right: 220px;padding-top: 8px; }
 #hlinks ul { margin: 0; }
 #hlinks li { float: left; list-style: none; margin-right: 10px; }
 #tagSearch { width: 150px; }

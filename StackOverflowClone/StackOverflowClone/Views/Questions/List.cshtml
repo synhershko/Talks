@@ -1,0 +1,27 @@
+﻿@using StackOverflowClone.Core
+@model dynamic
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="content">
+    <div id="mainbar">
+        <div class="subheader">
+            <h1 id="h-top-questions">@Model.Header</h1>
+        </div>
+        <div id="question-mini-list">
+            @if (Model == null)
+            {
+                <p>No questions found.</p>
+            }
+            else
+            {
+                Html.RenderPartial("_QuestionList", (IEnumerable<QuestionLightViewModel>)Model.Questions);
+            }
+        </div>
+    </div>
+
+    <div id="sidebar">
+        
+    </div>
+</div>

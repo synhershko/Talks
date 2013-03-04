@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
+using Raven.Client;
+using Raven.Client.Linq;
 using System.Web.Mvc;
 using StackOverflowClone.Core;
+using StackOverflowClone.Core.Indexes;
 using StackOverflowClone.Models;
 
 namespace StackOverflowClone.Controllers
@@ -107,6 +111,22 @@ namespace StackOverflowClone.Controllers
             }
             
             return RedirectToAction("View", new {id = id});
+        }
+
+        public ActionResult Search(string q)
+        {
+            var questionsQuery = RavenSession.Advanced.LuceneQuery<Question, QuestionsIndex>()
+                                             .Search("ForSearch", q);
+
+            RavenQueryStatistics stats;
+
+            dynamic viewModel = new ExpandoObject();
+            viewModel.User = new UserViewModel(User) { Id = User.Identity.Name, Name = User.Identity.Name };
+            viewModel.Questions = questionsQuery.SelectFields<QuestionLightViewModel>().Statistics(out stats).ToList();
+            viewModel.ResultsCount = stats.TotalResults;
+            viewModel.Header = stats.TotalResults + " results for " + q;
+
+            return View("List", viewModel);
         }
     }
 }

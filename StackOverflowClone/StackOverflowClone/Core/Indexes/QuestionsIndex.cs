@@ -21,7 +21,15 @@ namespace StackOverflowClone.Core.Indexes
                                               q.Tags,
                                               stats.ViewsCount,
                                               TotalVotes = stats.UpVoteCount - stats.DownVoteCount,
-                                              stats.FavoriteCount
+                                              stats.FavoriteCount,
+                                              ForSearch = new object[]
+                                                              {
+                                                                  q.Tags.Select(tag => tag),
+                                                                  q.Subject,
+                                                                  q.Content,
+                                                                  q.Answers.Select(a => a.Content),
+                                                                  user.DisplayName,
+                                                              }
                                           };
 
             Store("AnswersCount", FieldStorage.Yes);
@@ -30,6 +38,8 @@ namespace StackOverflowClone.Core.Indexes
             Store("TotalVotes", FieldStorage.Yes);
             Store("CreatedBy", FieldStorage.Yes);
             Store("UserReputation", FieldStorage.Yes);
+
+            Index("ForSearch", FieldIndexing.Analyzed); // Defaults to an English standard analyzer
         }
     }
 }

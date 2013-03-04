@@ -255,6 +255,7 @@
     <Content Include="Views\Questions\Ask.cshtml" />
     <Content Include="Views\Questions\_QuestionForm.cshtml" />
     <Content Include="Views\Questions\View.cshtml" />
+    <Content Include="Views\Questions\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
