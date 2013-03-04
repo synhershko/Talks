@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using Raven.Abstractions.Data;
 using Raven.Client;
-using Raven.Client.Linq;
+using Raven.Client.Bundles.MoreLikeThis;
 using System.Web.Mvc;
 using StackOverflowClone.Core;
 using StackOverflowClone.Core.Indexes;
@@ -43,10 +44,13 @@ namespace StackOverflowClone.Controllers
                 }
             }
 
+            var relatedQuestions = RavenSession.Advanced.MoreLikeThis<Question>("QuestionsIndex", question.Id);
+
             dynamic viewModel = new ExpandoObject();
             viewModel.User = new UserViewModel(User) { Id = User.Identity.Name, Name = User.Identity.Name };
             viewModel.Question = question;
             viewModel.Users = users;
+            viewModel.RelatedQuestions = relatedQuestions;
 
             return View("View", viewModel);
         }

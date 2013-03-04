@@ -6,6 +6,7 @@
     var q = (StackOverflowClone.Models.Question)Model.Question;
     var totalVotes = q.Stats.UpVoteCount - q.Stats.DownVoteCount;
     var users = (Dictionary<string, User>) Model.Users;
+    var related = (Question[]) Model.RelatedQuestions;
 }
 
 <div id="content">
@@ -413,7 +414,10 @@
         <div class="module sidebar-related">
             <h4 id="h-related">Related</h4>
             <div class="related">
-                <div class="spacer">TODO</div>
+                @foreach (var rq in related)
+                {
+                    <div class="spacer">@rq.Subject</div>
+                }
             </div>
         </div>
     </div>
