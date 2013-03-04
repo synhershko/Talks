@@ -8,12 +8,29 @@ using StackOverflowClone.Models;
 
 namespace StackOverflowClone.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : RavenController
     {
         [HttpGet]
         public ActionResult Index(string tag)
         {
-            throw new System.NotImplementedException();
+            var questions = RavenSession.Query<Question>();
+            var header = "Top Questions";
+
+            if (!string.IsNullOrWhiteSpace(tag))
+            {
+                header = "Questions Tagged '" + tag + "'";
+                questions = questions.Where(x => x.Tags.Any(y => y.Equals(tag)));
+            }
+            else
+            {
+                questions = questions.OrderByDescending(x => x.CreatedOn);
+            }
+                
+            dynamic viewModel = new ExpandoObject();
+            viewModel.Questions = questions.Take(20).ToList(); ;
+            viewModel.Header = header;
+            viewModel.User = new UserViewModel(User) {Id = User.Identity.Name, Name = User.Identity.Name};
+            return View(viewModel);
         }
 
         public ActionResult SignOut()

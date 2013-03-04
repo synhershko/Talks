@@ -142,6 +142,7 @@
     <Compile Include="Controllers\FakeDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
+    <Compile Include="Controllers\RavenController.cs" />
     <Compile Include="Core\AnswerInputModel.cs" />
     <Compile Include="Core\QuestionInputModel.cs" />
     <Compile Include="Core\QuestionLightViewModel.cs" />
@@ -150,6 +151,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\Stats.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

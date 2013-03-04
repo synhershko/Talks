@@ -11,29 +11,72 @@ using StackOverflowClone.Models;
 
 namespace StackOverflowClone.Controllers
 {
-    public class QuestionsController : Controller
+    public class QuestionsController : RavenController
     {
         public ActionResult View(int id)
         {
-            throw new NotImplementedException();
+            var q = RavenSession.Load<Question>(id);
+            if (q == null)
+                return HttpNotFound();
+
+            q.Stats = RavenSession.Load<Stats>(q.Id + "/stats");
+            q.Stats.ViewsCount++;
+
+            dynamic viewModel = new ExpandoObject();
+            viewModel.User = new UserViewModel(User) {Id = User.Identity.Name, Name = User.Identity.Name};
+            viewModel.Question = q;
+            return View(viewModel);
         }
 
         [HttpGet]
         public ActionResult Ask()
         {
-            throw new NotImplementedException();
+            dynamic viewModel = new ExpandoObject();
+            viewModel.User = new UserViewModel(User) { Id = User.Identity.Name, Name = User.Identity.Name };
+            viewModel.Question = new QuestionInputModel();
+            return View(viewModel);
         }
 
         [HttpPost] // Authorize
         public ActionResult Ask(QuestionInputModel inputModel)
         {
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                var q = inputModel.ToQuestion();
+                q.CreatedBy = "users/1"; // Just a stupid default because we haven't implemented log-in
+
+                RavenSession.Store(q);
+                RavenSession.Store(new Stats(), q.Id + "/stats");
+
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+
+            dynamic viewModel = new ExpandoObject();
+            viewModel.User = new UserViewModel(User) { Id = User.Identity.Name, Name = User.Identity.Name };
+            viewModel.Question = inputModel;
+            return View(viewModel);
         }
 
         [HttpPost]
         public ActionResult Answer(int id, AnswerInputModel input)
         {
-            throw new NotImplementedException();
+            var q = RavenSession.Load<Question>(id);
+            if (q == null)
+                return HttpNotFound();
+
+            if (ModelState.IsValid)
+            {
+                q.Answers.Add(new Answer
+                                  {
+                                      Comments = new List<Comment>(),
+                                      Content = input.Content,
+                                      CreatedByUserId = "users/1",  // again, just a stupid default
+                                      CreatedOn = DateTimeOffset.UtcNow,
+                                      Stats = new Stats(),
+                                  });
+            }
+
+            return RedirectToAction("View", new {id = id});
         }
     }
 }
