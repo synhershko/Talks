@@ -11,6 +11,7 @@ namespace StackOverflowClone.Core
         public DateTimeOffset CreatedOn { get; set; }
         public ICollection<string> Tags { get; set; }
         public string CreatedBy { get; set; }
+        public int UserReputation { get; set; }
         public int AnswersCount { get; set; }
         public int ViewsCount { get; set; }
         public int TotalVotes { get; set; }

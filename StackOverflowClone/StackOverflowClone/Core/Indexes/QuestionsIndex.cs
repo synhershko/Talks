@@ -11,10 +11,12 @@ namespace StackOverflowClone.Core.Indexes
         {
             Map = questions => from q in questions
                                let stats = LoadDocument<Stats>(q.Id + "/stats")
+                               let user = LoadDocument<User>(q.CreatedBy)
                                select new
                                           {
                                               q.CreatedOn,
-                                              q.CreatedBy,
+                                              CreatedBy = user.DisplayName,
+                                              UserReputation = user.Reputation,
                                               AnswersCount = q.Answers.Count,
                                               q.Tags,
                                               stats.ViewsCount,
@@ -26,6 +28,8 @@ namespace StackOverflowClone.Core.Indexes
             Store("ViewsCount", FieldStorage.Yes);
             Store("FavouriteCount", FieldStorage.Yes);
             Store("TotalVotes", FieldStorage.Yes);
+            Store("CreatedBy", FieldStorage.Yes);
+            Store("UserReputation", FieldStorage.Yes);
         }
     }
 }

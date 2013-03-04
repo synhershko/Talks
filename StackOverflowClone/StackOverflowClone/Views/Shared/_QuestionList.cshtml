@@ -35,7 +35,7 @@ else
                 <div class="started">
                     <span title="@question.CreatedOn" class="relativetime">@question.CreatedOn.DateTime.ToShortDateString()&nbsp;@question.CreatedOn.DateTime.ToShortTimeString()</span>
                     <a href="#">@question.CreatedBy</a>
-                    <span class="reputation-score" title="reputation score">??</span>
+                    <span class="reputation-score" title="reputation score">@question.UserReputation.ToSimplifiedNumberText()</span>
                 </div>
             </div>
         </div>

@@ -1,8 +1,11 @@
-﻿@model dynamic
+﻿@using StackOverflowClone.Core
+@using StackOverflowClone.Models
+@model dynamic
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     var q = (StackOverflowClone.Models.Question)Model.Question;
     var totalVotes = q.Stats.UpVoteCount - q.Stats.DownVoteCount;
+    var users = (Dictionary<string, User>) Model.Users;
 }
 
 <div id="content">
@@ -82,8 +85,8 @@
                                                         </a>
                                                     </div>
                                                     <div class="user-details">
-                                                        <a href="#">@q.CreatedBy</a><br>
-                                                        <span class="reputation-score" title="reputation score" dir="ltr">??</span><span
+                                                        <a href="#">@users[q.CreatedBy].DisplayName</a><br>
+                                                        <span class="reputation-score" title="reputation score" dir="ltr">@users[q.CreatedBy].Reputation.ToSimplifiedNumberText()</span><span
                                                             title="2 silver badges"><span class="badge2"></span><span class="badgecount">??</span></span><span
                                                                 title="10 bronze badges"><span class="badge3"></span><span class="badgecount">??</span></span>
                                                     </div>
@@ -132,7 +135,7 @@
                                                     <td class="comment-text">
                                                         <div>
                                                             <span class="comment-copy">@comment.Content</span>
-                                                            –&nbsp;<a href="/users/1379664/blachshma" title="7445 reputation" class="comment-user">@comment.CreatedByUserId</a>
+                                                            –&nbsp;<a href="/users/1379664/blachshma" title="7445 reputation" class="comment-user">@users[comment.CreatedByUserId].DisplayName</a>
                                                             <span class="comment-date" dir="ltr">@comment.CreatedOn</span>
                                                         </div>
                                                     </td>
@@ -233,8 +236,8 @@
                                                             </a>
                                                         </div>
                                                         <div class="user-details">
-                                                            <a href="/users/982949/brian-s">@answer.CreatedByUserId</a><br>
-                                                            <span class="reputation-score" title="reputation score" dir="ltr">??</span><span
+                                                            <a href="/users/982949/brian-s">@users[answer.CreatedByUserId].DisplayName</a><br>
+                                                            <span class="reputation-score" title="reputation score" dir="ltr">@users[answer.CreatedByUserId].Reputation.ToSimplifiedNumberText()</span><span
                                                                 title="2 silver badges"><span class="badge2"></span><span class="badgecount">??</span></span><span
                                                                     title="6 bronze badges"><span class="badge3"></span><span class="badgecount">??</span></span>
                                                         </div>
