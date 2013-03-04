@@ -60,5 +60,29 @@ namespace StackOverflowClone.Controllers
 
             return View("Ask", viewModel);
         }
+
+        [HttpPost]
+        public ActionResult Answer(int id, AnswerInputModel input)
+        {
+            var question = RavenSession.Load<Question>(id);
+            if (question == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            if (ModelState.IsValid)
+            {
+                question.Answers.Add(new Answer
+                                         {
+                                             Comments = new List<Comment>(),
+                                             Content = input.Content,
+                                             CreatedByUserId = "users/1", // again, just a stupid default
+                                             CreatedOn = DateTimeOffset.UtcNow,
+                                             Stats = new Stats()
+                                         });
+            }
+            
+            return RedirectToAction("View", new {id = id});
+        }
     }
 }
