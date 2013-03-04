@@ -1,5 +1,5 @@
 ﻿@using StackOverflowClone.Core
-@using StackOverflowClone.Models
+@using StackOverflowClone.Core.Indexes
 @model dynamic
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,7 +21,20 @@
             }
         </div>
     </div>
-        
+
     <div id="sidebar">
+        <div class="module">
+            <h2>Recent Tags</h2>
+            @{
+                Html.RenderPartial("_TagListVertical", (IEnumerable<QuestionTagsIndex.ReduceResult>)Model.RecentlyUsedTags);
+            }
+        </div>
+        <br/><br/>
+        <div class="module">
+            <h2>Most Used Tags</h2>
+            @{
+                Html.RenderPartial("_TagListVertical", (IEnumerable<QuestionTagsIndex.ReduceResult>)Model.MostUsedTags); 
+            }
+        </div>
     </div>
 </div>
