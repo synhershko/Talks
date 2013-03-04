@@ -1,0 +1,20 @@
+﻿@model ICollection<string>
+
+@if (Model == null || Model.Count == 0)
+{
+    <p>No tags</p>
+}
+else
+{
+    bool isFirstTag = true;
+    foreach (string tag in Model)
+    {
+        if (!isFirstTag)
+        {
+            @:&nbsp;
+        }
+        isFirstTag = false;
+        string classText = "post-tag";
+        @Html.ActionLink(tag, "Index", "Home", new {tag}, new {@class = classText, title = "show questions tagged " + tag, rel = "tag"})
+    }
+}

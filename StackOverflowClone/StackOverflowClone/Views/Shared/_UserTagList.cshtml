@@ -1,0 +1,21 @@
+﻿@model dynamic
+
+@if (Model == null)
+{
+    return;
+}
+@{
+    <div class="module" id="@Model.DivId1">
+        <h4 id="h-@Model.DivId1">@Model.Header</h4>
+        <div id="@Model.DivId1">
+            @if (Model.Tags == null || Model.Tags.Count <= 0)
+            {
+                <p>No Tags</p>
+            }
+            else
+            {
+                Html.RenderPartial("_TagList", (IList<string>) Model.Tags);
+            }
+        </div>
+    </div>
+}

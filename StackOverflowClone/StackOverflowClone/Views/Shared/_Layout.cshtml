@@ -1,0 +1,52 @@
+﻿@using StackOverflowClone.Core
+@model dynamic
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>Fake StackOverflow</title>
+
+    <link rel="shortcut icon" href="http://cdn.sstatic.net/stackoverflow/img/favicon.ico">
+    <link href="@Url.Content("/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/cupertino/jquery-ui.css" type="text/css" rel="Stylesheet" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+</head>
+<body class="home-page">
+    <noscript><div id="noscript-padding"></div></noscript>
+    <div id="notify-container"></div>
+    <div id="overlay-header"></div>
+    <div id="custom-header"></div>
+    <div class="container">
+        <div id="header">
+            
+            <div id="hlinks">
+                @Html.Partial("_Authentication", (UserViewModel) Model.User)
+            </div>
+            <div id="hsearch">
+                @Html.Partial("_TagSearch")
+            </div>
+
+            <br class="cbt">
+            
+            <a href="/">
+            <div id="hlogo">
+                <img src="/Content/logo.png" alt="RavenDb"/>
+            </div></a>
+
+            <div id="hmenus">
+                <div class="nav askquestion">
+                    <ul>
+                        <li>
+                            @Html.ActionLink("Ask a Question", "Ask", "Questions")
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        @RenderBody()
+    </div>
+
+    @RenderSection("JavaScript", false)
+</body>
+</html>

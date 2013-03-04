@@ -1,0 +1,17 @@
+﻿@model StackOverflowClone.Core.UserViewModel
+<span id="hlinks-user">
+    @if (Model != null && Model.IsAuthenticated)
+    {
+        @:Welcome <strong>@Model.Name</strong>! 
+        <ul>
+            <li>Settings</li>
+            <li>@Html.ActionLink("LogOff", "SignOut", "Home", new { Area = ""}, null)</li>
+        </ul>
+    }
+    else
+    {
+        <ul>
+            <li>@Html.ActionLink("Log On", "Authenticate",  "Home", new {Area = "", returnUrl = HttpContext.Current.Request.RawUrl}, null)</li>
+        </ul>
+    }
+</span>

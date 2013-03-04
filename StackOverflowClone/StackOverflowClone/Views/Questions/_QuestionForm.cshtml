@@ -1,0 +1,34 @@
+﻿@model StackOverflowClone.Core.QuestionInputModel
+@using (Html.BeginForm())
+{
+    <div class="form-item ask-title">
+        <table class="ask-title-table">
+            <tbody>
+                <tr>
+                    <td class="ask-title-cell-key">
+                        <label for="title">Title</label>
+                    </td>
+                    <td class="ask-title-cell-value">
+                        @Html.EditorFor(x => x.Subject, new { @class = "ask-title-field edit-field-overlayed", maxlength = "300" })
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> 
+    <div id="post-editor" class="post-editor">
+        @Html.TextAreaFor(x => x.Content, new { @class = "wmd-input processed", cols = "92", rows = "15"  })  
+    </div>
+    <div class="form-item">
+        <label>Tags</label>
+        @Html.EditorFor(x => x.Tags, new { maxlength = "300"})
+    </div>
+
+    if (!@ViewData.ModelState.IsValid)
+    {
+          @Html.ValidationSummary("Oops! Your question couldn't be submitted because:", new { @class = "form-error" })
+    }
+    
+    <p>
+        <input type="submit" value="Ask Question"/>
+    </p>
+}

@@ -1,0 +1,20 @@
+﻿@using StackOverflowClone.Core
+@model dynamic
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="content">
+    <div id="mainbar">
+        <div class="subheader">
+            <h1 id="h-top-questions">Ask a Question</h1>
+        </div>
+        <div id="question-mini-list">
+            @{ Html.RenderPartial("_QuestionForm", (QuestionInputModel)Model.Question); }
+        </div>
+    </div>
+
+    <div id="sidebar">
+        <div>How to Ask a Question</div>
+    </div>
+</div>
