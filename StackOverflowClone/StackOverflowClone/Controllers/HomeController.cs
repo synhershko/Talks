@@ -27,7 +27,7 @@ namespace StackOverflowClone.Controllers
             }
                 
             dynamic viewModel = new ExpandoObject();
-            viewModel.Questions = questions.Take(20).ToList(); ;
+            viewModel.Questions = questions.Take(20).AsProjection<QuestionLightViewModel>().ToList(); ;
             viewModel.Header = header;
             viewModel.User = new UserViewModel(User) {Id = User.Identity.Name, Name = User.Identity.Name};
             return View(viewModel);
