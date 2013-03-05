@@ -15,16 +15,36 @@ namespace StackOverflowClone.Controllers
     {
         public ActionResult View(int id)
         {
-            var q = RavenSession.Load<Question>(id);
+            var q = RavenSession.Include<Question>(x => x.CreatedBy)
+                .Include("Comments,CreatedByUserId")
+                .Include("Answers,CreatedByUserId")
+                .Load(id);
+
             if (q == null)
                 return HttpNotFound();
 
             q.Stats = RavenSession.Load<Stats>(q.Id + "/stats");
             q.Stats.ViewsCount++;
 
+            // Since we are using Includes, this entire code block will not access the server even once
+            var users = new Dictionary<string, User>();
+            users.Add(q.CreatedBy, RavenSession.Load<User>(q.CreatedBy));
+            foreach (var answer in q.Answers)
+            {
+                users.Add(answer.CreatedByUserId, RavenSession.Load<User>(answer.CreatedByUserId));
+            }
+            if (q.Comments != null)
+            {
+                foreach (var comment in q.Comments)
+                {
+                    users.Add(comment.CreatedByUserId, RavenSession.Load<User>(comment.CreatedByUserId));
+                }
+            }
+
             dynamic viewModel = new ExpandoObject();
             viewModel.User = new UserViewModel(User) {Id = User.Identity.Name, Name = User.Identity.Name};
             viewModel.Question = q;
+            viewModel.Users = users;
             return View(viewModel);
         }
 
