@@ -13,7 +13,7 @@ namespace StackOverflowClone
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        private static IDocumentStore theDocStore;
+        private static DocumentStore theDocStore;
         public static IDocumentStore DocumentStore {get { return theDocStore; }}
 
         protected void Application_Start()
@@ -25,7 +25,8 @@ namespace StackOverflowClone
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            theDocStore = new DocumentStore {ConnectionStringName = "RavenDB"}.Initialize();
+            theDocStore = new DocumentStore {ConnectionStringName = "RavenDB", DefaultDatabase = "StackOverflow"};
+            theDocStore.Initialize();
             IndexCreation.CreateIndexes(typeof(MvcApplication).Assembly, theDocStore);
         }
     }
