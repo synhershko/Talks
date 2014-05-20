@@ -1,11 +1,10 @@
-﻿using System.Dynamic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
-using Raven.Client;
 using Raven.Client.Linq;
 using StackOverflowClone.Core;
 using StackOverflowClone.Core.Indexes;
 using StackOverflowClone.Models;
+using StackOverflowClone.ViewModels;
 
 namespace StackOverflowClone.Controllers
 {
@@ -38,10 +37,9 @@ namespace StackOverflowClone.Controllers
                         .Take(20)
                         .ToList();
                 
-            dynamic viewModel = new ExpandoObject();
-            viewModel.Questions = questions.Take(20).AsProjection<QuestionLightViewModel>().ToList(); ;
+            var viewModel = new HomeViewModel(User);
+            viewModel.Questions = questions.Take(20).ToList(); ;
             viewModel.Header = header;
-            viewModel.User = new UserViewModel(User) {Id = User.Identity.Name, Name = User.Identity.Name};
             viewModel.RecentlyUsedTags = recentlyUsedTags;
             viewModel.MostUsedTags = mostUsedTags;
             return View(viewModel);

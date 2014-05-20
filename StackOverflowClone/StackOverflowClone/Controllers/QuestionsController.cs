@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
-using Raven.Abstractions.Data;
 using Raven.Client;
 using Raven.Client.Bundles.MoreLikeThis;
 using System.Web.Mvc;
 using StackOverflowClone.Core;
 using StackOverflowClone.Core.Indexes;
 using StackOverflowClone.Models;
+using StackOverflowClone.ViewModels;
 
 namespace StackOverflowClone.Controllers
 {
@@ -42,8 +41,7 @@ namespace StackOverflowClone.Controllers
                 }
             }
 
-            dynamic viewModel = new ExpandoObject();
-            viewModel.User = new UserViewModel(User) {Id = User.Identity.Name, Name = User.Identity.Name};
+            var viewModel = new ViewQuestionViewModel(User);
             viewModel.Question = q;
             viewModel.Users = users;
             viewModel.RelatedQuestions = RavenSession.Advanced.MoreLikeThis<Question>("QuestionsIndex", q.Id);
@@ -53,10 +51,7 @@ namespace StackOverflowClone.Controllers
         [HttpGet]
         public ActionResult Ask()
         {
-            dynamic viewModel = new ExpandoObject();
-            viewModel.User = new UserViewModel(User) { Id = User.Identity.Name, Name = User.Identity.Name };
-            viewModel.Question = new QuestionInputModel();
-            return View(viewModel);
+            return View(new AskViewModel(User));
         }
 
         [HttpPost] // Authorize
@@ -73,8 +68,7 @@ namespace StackOverflowClone.Controllers
                 return RedirectToAction("Index", "Home", new { area = "" });
             }
 
-            dynamic viewModel = new ExpandoObject();
-            viewModel.User = new UserViewModel(User) { Id = User.Identity.Name, Name = User.Identity.Name };
+            var viewModel = new AskViewModel(User);
             viewModel.Question = inputModel;
             return View(viewModel);
         }
@@ -108,13 +102,12 @@ namespace StackOverflowClone.Controllers
 
             RavenQueryStatistics stats;
 
-            dynamic viewModel = new ExpandoObject();
-            viewModel.User = new UserViewModel(User) {Id = User.Identity.Name, Name = User.Identity.Name};
+            var viewModel = new SearchResultsViewModel(User);
             viewModel.Questions = questionsQuery.SelectFields<QuestionLightViewModel>().Statistics(out stats).ToList();
             viewModel.ResultsCount = stats.TotalResults;
             viewModel.Header = stats.TotalResults + " results for " + q;
 
-            return View("List", viewModel);
+            return View("SearchResults", viewModel);
         }
     }
 }

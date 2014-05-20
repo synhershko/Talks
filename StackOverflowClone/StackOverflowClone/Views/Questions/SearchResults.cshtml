@@ -1,5 +1,5 @@
 ﻿@using StackOverflowClone.Core
-@model dynamic
+@model StackOverflowClone.ViewModels.SearchResultsViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -16,7 +16,7 @@
             }
             else
             {
-                Html.RenderPartial("_QuestionList", (IEnumerable<QuestionLightViewModel>)Model.Questions);
+                Html.RenderPartial("_QuestionList2", Model.Questions);
             }
         </div>
     </div>

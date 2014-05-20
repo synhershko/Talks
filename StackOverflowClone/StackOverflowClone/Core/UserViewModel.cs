@@ -7,6 +7,7 @@ namespace StackOverflowClone.Core
         public UserViewModel(IPrincipal principal)
         {
             IsAuthenticated = principal.Identity.IsAuthenticated;
+            Name = Id = principal.Identity.Name;
         }
 
         public bool IsAuthenticated { get; private set; }
